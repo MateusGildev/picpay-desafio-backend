@@ -1,0 +1,20 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    initialization-mode: always
+    password: test
+    platform: mysql
+    url: jdbc:mysql://localhost:1000/PicPaySimples
+    username: admin
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.MySQLDialect
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.PhysicalNamingStrategyStandardImpl
