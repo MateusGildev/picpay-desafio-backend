@@ -1,16 +1,28 @@
-version: '4.30.0'
+version: '3.8'
+
 services:
-  db:
-    container_name: mysql_local
-    image: mysql:8.0
-    volumes:
-      - ./db:/var/lib/mysql
-    environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_ROOT_PASSWORD: "test"
-      MYSQL_DATABASE: "PicPaySimples"
-      MYSQL_USER: "admin"
-      MYSQL_PASSWORD: "test"
-      MYSQL_ROOT_HOST: "%"
+  mysql_db:
+    image: mysql:8
+    container_name: mysql_picpay
+
     ports:
-      - "1000:3306"
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: PicPayDB
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    networks:
+      - mysql-compose-network
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    ports:
+      - "8282:8080"
+    networks:
+      - mysql-compose-network
+
+networks:
+  mysql-compose-network:
+    driver: bridge

@@ -1,6 +1,7 @@
 package com.br.desafio.backend.model
 
 import com.br.desafio.backend.dto.UserDTO
+import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.persistence.*
 import jakarta.validation.constraints.DecimalMin
 import jakarta.validation.constraints.Email
@@ -20,6 +21,7 @@ data class User(
     val fullName: String,
 
     @field:CPF(message = "Invalid CPF format")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "###.###.###-##")
     val cpf: String,
 
     @field:Email(message = "Invalid email format")
@@ -31,7 +33,7 @@ data class User(
 
     @field:NotNull(message = "Balance must not be null")
     @field:DecimalMin(value = "0.0", inclusive = false, message = "Balance must be greater than zero")
-    val balance: BigDecimal,
+    var balance: BigDecimal,
 
     @Enumerated(EnumType.STRING)
     @field:NotNull(message = "Account type must not be null")
