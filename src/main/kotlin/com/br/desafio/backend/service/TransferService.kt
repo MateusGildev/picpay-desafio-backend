@@ -1,16 +1,15 @@
 package com.br.desafio.backend.service
 
 import com.br.desafio.backend.dto.TransferDTO
+import com.br.desafio.backend.exceptions.ObjectNotFoundException
 import com.br.desafio.backend.exceptions.UserNotFound
 import com.br.desafio.backend.model.Transfer
 import com.br.desafio.backend.repositories.TransferRepository
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
-import java.util.*
 
 @Service
 class TransferService(
@@ -46,11 +45,8 @@ class TransferService(
         return returned
     }
 
-    fun findById(id: Long): Optional<Transfer>? {
-        if (id == null){
-            return null
-        }
-
-        return transferRepository.findById(id)
+    fun findById(id: Long): Transfer? {
+        return transferRepository.findByIdOrNull(id)
+            ?: throw ObjectNotFoundException("Transferencia de id:${id} não encontrada! Verifique se o id esta correto.")
     }
 }

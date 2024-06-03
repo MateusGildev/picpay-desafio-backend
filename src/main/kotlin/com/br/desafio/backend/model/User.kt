@@ -22,10 +22,12 @@ data class User(
 
     @field:CPF(message = "Invalid CPF format")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "###.###.###-##")
+    @Column(unique = true)
     val cpf: String,
 
     @field:Email(message = "Invalid email format")
     @field:NotBlank(message = "Email must not be blank")
+    @Column(unique = true)
     val email: String,
 
     @field:NotBlank(message = "Password must not be blank")
